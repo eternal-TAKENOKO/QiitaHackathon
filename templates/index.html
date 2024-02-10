@@ -1,36 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shiritori Game</title>
+    <title>Shiritori Game with CPU</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>Shiritori Game</h1>
+    <h1>しりとりゲーム</h1>
     <form id="shiritoriForm">
-        <label for="new_word">Enter a word: </label>
+        <label for="new_word">単語を入力してください: </label>
         <input type="text" id="new_word" name="new_word" required>
-        <input type="submit" value="Submit">
+        <input type="submit" value="送信">
     </form>
-    <div id="response"></div>
+    <div id="userResponse"></div>
+    <div id="cpuResponse"></div>
 
     <script>
         $(document).ready(function() {
             $('#shiritoriForm').submit(function(event) {
-                event.preventDefault(); // フォームのデフォルト送信を防止
+                event.preventDefault(); // フォームのデフォルト送信を防ぎます
                 var newWord = $('#new_word').val();
                 $.ajax({
                     url: '/shiritori',
                     type: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify({ "new_word": newWord, "last_word": "" }), // ここでlast_wordを適切に設定する必要があります
+                    data: JSON.stringify({ "new_word": newWord, "last_word": "" }), // 適宜last_wordを更新する必要があります
                     dataType: 'json',
                     success: function(response) {
-                        $('#response').html('<p>' + response.message + '</p>');
+                        $('#userResponse').html('<p>ユーザー: ' + newWord + '</p>');
+                        if (!response.cpu_loses) {
+                            $('#cpuResponse').html('<p>CPU: ' + response.message + '</p>');
+                        } else {
+                            $('#cpuResponse').html('<p>' + response.message + '</p>');
+                        }
                     },
                     error: function(response) {
-                        $('#response').html('<p>Error: ' + response.responseJSON.message + '</p>');
+                        $('#userResponse').html('<p>エラー: ' + response.responseJSON.message + '</p>');
+                        $('#cpuResponse').empty();
                     }
                 });
             });

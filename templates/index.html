@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiritori Game</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Shiritori Game</h1>
+    <form id="shiritoriForm">
+        <label for="new_word">Enter a word: </label>
+        <input type="text" id="new_word" name="new_word" required>
+        <input type="submit" value="Submit">
+    </form>
+    <div id="response"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#shiritoriForm').submit(function(event) {
+                event.preventDefault(); // フォームのデフォルト送信を防止
+                var newWord = $('#new_word').val();
+                $.ajax({
+                    url: '/shiritori',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ "new_word": newWord, "last_word": "" }), // ここでlast_wordを適切に設定する必要があります
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#response').html('<p>' + response.message + '</p>');
+                    },
+                    error: function(response) {
+                        $('#response').html('<p>Error: ' + response.responseJSON.message + '</p>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

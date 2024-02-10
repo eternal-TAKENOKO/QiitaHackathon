@@ -1,5 +1,8 @@
 from flask import Flask, request, jsonify, render_template
 import sqlite3
+import ctypes
+
+libc = ctypes.cdll.LoadLibrary("return.score.so")
 
 app = Flask(__name__)
 
@@ -41,3 +44,4 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    print(libc.check_eostr_nn("イオン"))

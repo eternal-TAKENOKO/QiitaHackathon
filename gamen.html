@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Centered Rectangles with Arrows</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container {
+    position: relative;
+  }
+
+  .rectangle {
+    width: 650px;
+    height: 200px;
+    background-color: #fff;
+    border: 2px solid #000;
+    text-align: center;
+    line-height: 100px;
+    margin: 10px;
+  }
+
+  .arrow-down {
+    width: 0;
+    height: 20px;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-top: 50px solid red;
+    margin-right: auto;
+  }
+
+  .arrow-up {
+    width: 0;
+    height: 20px;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-bottom: 50px solid blue;
+    margin-left: auto;
+  }
+
+  .top-left-rectangle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 400px;
+    height: 150px;
+    background-color: #fff;
+    border: 2px solid #000;
+    text-align: center;
+    line-height: 100px;
+  }
+
+  .bottom-rectangle {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
+    height: 120px;
+    background-color: #fff;
+    border: 2px solid #000;
+    text-align: center;
+    line-height: 100px;
+  }
+
+  .top-right-rectangle {
+    position: absolute;
+    top: 100px;
+    right: 100px;
+    width: 300px;
+    height: 150px;
+    background-color: #fff;
+    border: 2px solid #000;
+    text-align: center;
+    line-height: 100px;
+  }
+
+  .bottom-left-rectangle {
+    position: absolute;
+    bottom: 100px;
+    left: 80px;
+    width: 400px;
+    height: 150px;
+    background-color: #fff;
+    border: 2px solid #000;
+    text-align: center;
+    line-height: 100px;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="rectangle">AIの回答</div>
+    <div class="arrow-down"></div>
+    <div class="arrow-up"></div>
+    <div class="rectangle">自分の回答入力欄</div>
+  </div>
+  <div class="top-left-rectangle">自分/相手のターン</div>
+  <div class="bottom-rectangle">確定</div>
+  <div class="top-right-rectangle">コンボ</div>
+  <div class="bottom-left-rectangle">スコア ~</div>
+</body>
+</html>

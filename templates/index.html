@@ -3,45 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shiritori Game with CPU</title>
+    <title>しりとりゲーム</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>しりとりゲーム</h1>
-    <form id="shiritoriForm">
-        <label for="new_word">単語を入力してください: </label>
-        <input type="text" id="new_word" name="new_word" required>
-        <input type="submit" value="送信">
-    </form>
-    <div id="userResponse"></div>
-    <div id="cpuResponse"></div>
+    <div class="container">
+        <header>
+            <h1>自分/相手のターン</h1>
+        </header>
+        
+        <section class="turn-display">
+            <div class="user-turn">
+                <input type="text" id="userInput" placeholder="あなたの単語を入力" required>
+                <button id="submitWord">送信</button>
+            </div>
+            <div class="cpu-turn">
+                <p id="cpuWord">AIの回答</p>
+            </div>
+        </section>
+        
+        <footer>
+            <div class="status-message">
+                <p id="status">自分の回答 入力欄</p>
+            </div>
+            <div class="controls">
+                <button id="startGame">スタート</button>
+                <button id="endGame">終了</button>
+            </div>
+        </footer>
+    </div>
 
     <script>
-        $(document).ready(function() {
-            $('#shiritoriForm').submit(function(event) {
-                event.preventDefault(); // フォームのデフォルト送信を防ぎます
-                var newWord = $('#new_word').val();
-                $.ajax({
-                    url: '/shiritori',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({ "new_word": newWord, "last_word": "" }), // 適宜last_wordを更新する必要があります
-                    dataType: 'json',
-                    success: function(response) {
-                        $('#userResponse').html('<p>ユーザー: ' + newWord + '</p>');
-                        if (!response.cpu_loses) {
-                            $('#cpuResponse').html('<p>CPU: ' + response.message + '</p>');
-                        } else {
-                            $('#cpuResponse').html('<p>' + response.message + '</p>');
-                        }
-                    },
-                    error: function(response) {
-                        $('#userResponse').html('<p>エラー: ' + response.responseJSON.message + '</p>');
-                        $('#cpuResponse').empty();
-                    }
-                });
+    $(document).ready(function() {
+        $('#submitWord').on('click', function() {
+            let userWord = $('#userInput').val();
+            if (!userWord) {
+                alert('単語を入力してください。');
+                return;
+            }
+            $('#status').text('考え中...');
+            
+            $.ajax({
+                url: '/shiritori',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ "last_word": $('#cpuWord').text(), "new_word": userWord }),
+                dataType: 'json',
+                success: function(response) {
+                    $('#status').text('あなたのターン: ' + userWord);
+                    $('#cpuWord').text(response.message);
+                    $('#userInput').val(''); // 入力フィールドをクリア
+                },
+                error: function(xhr, status, error) {
+                    $('#status').text('エラーが発生しました。');
+                    console.error(error);
+                }
             });
         });
+
+        $('#startGame').on('click', function() {
+            // ゲーム開始の処理をここに記述
+        });
+
+        $('#endGame').on('click', function() {
+            // ゲーム終了の処理をここに記述
+        });
+    });
     </script>
 </body>
 </html>

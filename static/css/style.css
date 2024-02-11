@@ -1,0 +1,85 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f2f2f2;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-header h1 {
+    margin: 0;
+    color: #333;
+}
+
+.game-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.user-input {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.user-input input {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.user-input button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #5cb85c;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.user-input button:hover {
+    background-color: #4cae4c;
+}
+
+.ai-response #aiWord {
+    padding: 10px 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.game-footer .status-message {
+    margin-bottom: 15px;
+}
+
+.game-footer .status-message p {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.game-controls button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    background-color: #337ab7;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.game-controls button:hover {
+    background-color: #286090;
+}

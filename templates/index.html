@@ -2,74 +2,38 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>しりとりゲーム</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href={{ url_for('static', filename='css/style.css') }}>
+    <script src="{{ url_for('static', filename='javascript/script.js') }}"></script>
 </head>
 <body>
-    <div class="container">
-        <header>
+    <div class="game-container">
+        <div class="game-header">
             <h1>自分/相手のターン</h1>
-        </header>
-        
-        <section class="turn-display">
-            <div class="user-turn">
-                <input type="text" id="userInput" placeholder="あなたの単語を入力" required>
+        </div>
+        <div class="game-content">
+            <div class="user-input">
+                <input type="text" id="userInput" placeholder="自分の単語を入力" autocomplete="off">
                 <button id="submitWord">送信</button>
             </div>
-            <div class="cpu-turn">
-                <p id="cpuWord">AIの回答</p>
+            <div class="ai-response">
+                <div id="aiWord">AIの回答</div>
             </div>
-        </section>
-        
-        <footer>
+        </div>
+        <div class="game-footer">
             <div class="status-message">
-                <p id="status">自分の回答 入力欄</p>
+                <p id="status">ステータスメッセージ</p>
             </div>
-            <div class="controls">
+            <div class="game-controls">
                 <button id="startGame">スタート</button>
                 <button id="endGame">終了</button>
             </div>
-        </footer>
+        </div>
     </div>
 
-    <script>
-    $(document).ready(function() {
-        $('#submitWord').on('click', function() {
-            let userWord = $('#userInput').val();
-            if (!userWord) {
-                alert('単語を入力してください。');
-                return;
-            }
-            $('#status').text('考え中...');
-            
-            $.ajax({
-                url: '/shiritori',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ "last_word": $('#cpuWord').text(), "new_word": userWord }),
-                dataType: 'json',
-                success: function(response) {
-                    $('#status').text('あなたのターン: ' + userWord);
-                    $('#cpuWord').text(response.message);
-                    $('#userInput').val(''); // 入力フィールドをクリア
-                },
-                error: function(xhr, status, error) {
-                    $('#status').text('エラーが発生しました。');
-                    console.error(error);
-                }
-            });
-        });
-
-        $('#startGame').on('click', function() {
-            // ゲーム開始の処理をここに記述
-        });
-
-        $('#endGame').on('click', function() {
-            // ゲーム終了の処理をここに記述
-        });
-    });
-    </script>
+    <script src="static/script.js"></script>
 </body>
 </html>
+
